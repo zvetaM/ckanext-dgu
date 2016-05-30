@@ -202,7 +202,7 @@ class DrupalAuthMiddleware(object):
         # ask drupal about this user
         drupal_user_properties = self.drupal_client.get_user_properties(drupal_user_id)
         user_dict = DrupalUserMapping.drupal_user_to_ckan_user(
-                drupal_user_properties)
+                drupal_user_properties, drupal_user_properties['name'])
 
         # see if user already exists in CKAN
         ckan_user_name = user_dict['name']
@@ -278,7 +278,7 @@ class DrupalAuthMiddleware(object):
         should_be_sysadmin = bool(set(('administrator', 'package admin', 'publisher admin', 'ckan administrator')) & set(drupal_roles))
         if should_be_sysadmin and not user.sysadmin:
             # Make user a sysadmin
-            user.syadmin = True
+            user.sysadmin = True
             log.info('User made a sysadmin: %s', user_name)
             needs_commit = True
         elif not should_be_sysadmin and user.sysadmin:
