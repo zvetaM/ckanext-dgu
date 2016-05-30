@@ -275,7 +275,7 @@ class DrupalAuthMiddleware(object):
 
         # Sysadmin or not
         log.debug('User roles in Drupal: %r', drupal_roles)
-        should_be_sysadmin = bool(set(('administrator', 'package admin', 'publisher admin', 'ckan administrator')) & set(drupal_roles))
+        should_be_sysadmin = bool(set(('administrator', 'package admin', 'publisher admin', 'ckan administrator', 'CKAN sysadmin')) & set(drupal_roles))
         if should_be_sysadmin and not user.sysadmin:
             # Make user a sysadmin
             user.sysadmin = True
